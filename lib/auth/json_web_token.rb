@@ -7,17 +7,15 @@ module Auth
 
     class << self
       def encode(payload)
-        JWT.encode({ exp: expiration_time }.merge(payload), JWT_KEY)
+        JWT.encode({ exp: expiration_time.to_i }.merge(payload), JWT_KEY)
       end
 
       def decode(token)
         JWT.decode(token, JWT_KEY).first.deep_symbolize_keys
       end
 
-      private
-
       def expiration_time
-        JWT_EXPIRATION_HOURS.hours.from_now.to_i
+        JWT_EXPIRATION_HOURS.hours.from_now
       end
     end
   end
