@@ -10,6 +10,10 @@ module Auth
         JWT.encode({ exp: expiration_time }.merge(payload), JWT_KEY)
       end
 
+      def decode(token)
+        JWT.decode(token, JWT_KEY).first.deep_symbolize_keys
+      end
+
       private
 
       def expiration_time
