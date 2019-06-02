@@ -4,7 +4,7 @@ module Api
   module V1
     class UserSerializer
       include FastJsonapi::ObjectSerializer
-      attributes :name, :email
+      attributes :id, :name, :email
     end
   end
 end
