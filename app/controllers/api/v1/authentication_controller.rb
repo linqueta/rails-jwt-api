@@ -6,11 +6,16 @@ module Api
       before_action :authorize, only: :logout
 
       def login
-        time = ::Auth::JsonWebToken.expiration_time.iso8601
-        token = ::Auth::JsonWebToken.encode({})
+        user = User.find_by!(email: login_params[:email]).authenticate(login_params[:password])
+        return head :unauthorized unless user
+
         # TODO: Check blacklist
+        time = ::Auth::JsonWebToken.expiration_time.iso8601
+        token = ::Auth::JsonWebToken.encode(user_id: user.id)
 
         render json: { token: token, exp: time }, status: :created
+      rescue ActiveRecord::RecordNotFound
+        head :not_found
       end
 
       def logout

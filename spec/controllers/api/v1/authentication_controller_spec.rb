@@ -4,14 +4,29 @@ require 'rails_helper'
 
 describe Api::V1::AuthenticationController, type: :controller do
   describe '#login' do
+    let!(:user) { create :user }
     subject { post :login, params }
 
     before { subject }
 
-    let(:body) { JSON.parse(response.body).deep_symbolize_keys }
-
-    context 'without params' do
+    context 'with unknown user' do
       let(:params) { {} }
+
+      it 'should return not found' do
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'with invalid password' do
+      let(:params) { { params: { email: user.email, password: '123' } } }
+
+      it 'should return unauthorized' do
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context 'with valid password' do
+      let(:params) { { params: { email: user.email, password: '123456' } } }
 
       it 'should return created' do
         expect(response.status).to eq(201)
@@ -61,7 +76,8 @@ describe Api::V1::AuthenticationController, type: :controller do
     end
 
     context 'with valid token' do
-      let(:authorization_header) { ::Auth::JsonWebToken.encode({}) }
+      let(:user) { create :user }
+      let(:authorization_header) { ::Auth::JsonWebToken.encode(user_id: user.id) }
 
       it 'should return success' do
         expect(response.status).to eq(200)
