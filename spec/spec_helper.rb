@@ -18,7 +18,10 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     DatabaseCleaner.strategy = :transaction
   end
-  config.after(:each) { DatabaseCleaner.clean }
+  config.after(:each) do
+    Rails.cache.clear(::Auth::JsonWebToken::BLACKLIST_HEADER)
+    DatabaseCleaner.clean
+  end
 
   JsonMatchers.schema_root = 'spec/schemas'
 end

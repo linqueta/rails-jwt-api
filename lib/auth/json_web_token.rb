@@ -4,6 +4,7 @@ module Auth
   module JsonWebToken
     JWT_KEY = Rails.application.secrets.jwt_key.to_s
     JWT_EXPIRATION_HOURS = Rails.application.secrets.jwt_expiration_hours.to_i
+    BLACKLIST_HEADER = 'jwt_blacklist:'
 
     class << self
       def encode(payload)
@@ -16,6 +17,14 @@ module Auth
 
       def expiration_time
         JWT_EXPIRATION_HOURS.hours.from_now
+      end
+
+      def blacklist!(token)
+        Rails.cache.write("#{BLACKLIST_HEADER}#{token}", true, expires_in: JWT_EXPIRATION_HOURS.hours.minutes)
+      end
+
+      def blacklist?(token)
+        Rails.cache.read("#{BLACKLIST_HEADER}#{token}")
       end
     end
   end

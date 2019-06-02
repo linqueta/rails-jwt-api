@@ -75,12 +75,28 @@ describe Api::V1::AuthenticationController, type: :controller do
       end
     end
 
+    context 'with token in blacklist' do
+      let(:authorization_header) do
+        ::Auth::JsonWebToken.encode({}).tap do |token|
+          ::Auth::JsonWebToken.blacklist!(token)
+        end
+      end
+
+      it 'should return unauthorized' do
+        expect(response.status).to eq(401)
+      end
+    end
+
     context 'with valid token' do
       let(:user) { create :user }
       let(:authorization_header) { ::Auth::JsonWebToken.encode(user_id: user.id) }
 
       it 'should return success' do
         expect(response.status).to eq(200)
+      end
+
+      it 'should set in blacklist' do
+        expect(::Auth::JsonWebToken.blacklist?(authorization_header)).to be_truthy
       end
     end
   end
