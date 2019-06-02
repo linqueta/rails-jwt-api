@@ -1,24 +1,21 @@
-# README
+# Rails JWT API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run server:
+```bash
+  rails s
+```
 
-Things you may want to cover:
+To run tests:
+```bash
+  bundle exec rspec
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### This project use:
+  - Ruby 2.6.2
+  - Rails 5.2
+  - [JWT](https://github.com/jwt/ruby-jwt)
+  - [FastJsonAPI](https://github.com/Netflix/fast_jsonapi)
+  - [Rspec](https://github.com/rspec/rspec-rails)
+  - [FactoryBot](https://github.com/thoughtbot/factory_bot_rails)
+  - [DatabaseCleaner](https://github.com/DatabaseCleaner/database_cleaner)
+  - [JsonMatchers](https://github.com/thoughtbot/json_matchers)
