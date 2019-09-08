@@ -41,7 +41,7 @@ module Auth
       end
 
       def expiration_time
-        JWT_EXPIRATION_HOURS.hours.from_now
+        EXPIRATION_HOURS.hours.from_now
       end
     end
   end
