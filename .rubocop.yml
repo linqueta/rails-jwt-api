@@ -21,7 +21,7 @@ Metrics/BlockLength:
     - 'spec/**/*'
 
 AllCops:
-  TargetRubyVersion: 2.6.2
+  TargetRubyVersion: 2.6.4
   DisplayCopNames: true
   Exclude:
     - 'db/**/*'

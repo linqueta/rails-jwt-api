@@ -11,6 +11,7 @@ gem 'puma'
 gem 'bcrypt'
 gem 'jwt'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

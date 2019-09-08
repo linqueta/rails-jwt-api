@@ -2,19 +2,15 @@
 
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < ApiController
       before_action :authorize
 
       def index
-        render json: Api::V1::UserSerializer.new(User.all.select(:id, :name, :email))
+        render json: User.all, each_serializer: Api::V1::UserSerializer
       end
 
       def update
-        if @user.update(user_params)
-          render json: Api::V1::UserSerializer.new(@user)
-        else
-          render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-        end
+        @user.update!(user_params).then { render json: @user, serializer: Api::V1::UserSerializer }
       end
 
       private

@@ -14,7 +14,7 @@ module JWT
     rescue JWT::DecodeError,
            JWT::VerificationError,
            JWT::ExpiredSignature,
-           ActiveRecord::RecordNotFound,
+           ActiveRecord::RecordNotFound
       raise NotAuthorizedError
     end
 
