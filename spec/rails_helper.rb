@@ -26,4 +26,5 @@ RSpec.configure do |config|
 
   CacheConfig.configure(config)
   DatabaseCleanerConfig.configure(config)
+  FactoryBotConfig.configure(config)
 end
