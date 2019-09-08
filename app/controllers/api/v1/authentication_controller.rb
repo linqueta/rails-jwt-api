@@ -13,7 +13,7 @@ module Api
         time = ::Auth::JsonWebToken.expiration_time.iso8601
         token = ::Auth::JsonWebToken.encode(user_id: user.id)
 
-        render json: { token: token, exp: time }, status: :created
+        render json: { token: token }, status: :created
       rescue ActiveRecord::RecordNotFound
         head :not_found
       end

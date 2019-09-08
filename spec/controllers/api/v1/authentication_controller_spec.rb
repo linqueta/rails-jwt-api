@@ -32,9 +32,8 @@ describe Api::V1::AuthenticationController, type: :controller do
         expect(response.status).to eq(201)
       end
 
-      it 'should return token and expiration time' do
+      it 'should return token' do
         expect(body[:token]).not_to be_nil
-        expect(body[:exp]).not_to be_nil
       end
     end
   end
