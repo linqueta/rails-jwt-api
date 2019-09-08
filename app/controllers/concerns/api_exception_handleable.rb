@@ -4,7 +4,7 @@ module ApiExceptionHandleable
   extend ActiveSupport::Concern
 
   included do
-    rescue_from StandardError, with: :internal_server_error
+    # rescue_from StandardError, with: :internal_server_error
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from ActiveRecord::RecordNotFound, with: :not_found
     rescue_from JWT::Authenticable::NotAuthenticatedError, with: :not_found
