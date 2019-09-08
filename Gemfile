@@ -12,19 +12,25 @@ gem 'bcrypt'
 gem 'jwt'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails'
-  gem 'pry', '~> 0.12.2'
-  gem 'rubocop', require: false
-  gem 'factory_bot_rails'
+    gem 'byebug', platforms: %i[mri mingw x64_mingw]
+    gem 'factory_bot_rails'
+    gem 'pry-byebug'
+    gem 'pry-rails'
+    gem 'rubocop'
+    gem 'rubocop-performance'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.8'
   gem 'database_cleaner'
   gem 'json_matchers'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'simplecov', require: false
+  gem 'simplecov-summary'
+  gem 'simplecov-console'
 end
 
 group :development do
