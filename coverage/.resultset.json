@@ -1,14 +1,6 @@
 {
   "RSpec": {
     "coverage": {
-      "/home/linqueta/Documents/linqueta/rails-jwt-api/app/mailers/application_mailer.rb": [
-        null,
-        null,
-        0,
-        0,
-        0,
-        0
-      ],
       "/home/linqueta/Documents/linqueta/rails-jwt-api/app/controllers/api/v1/users_controller.rb": [
         null,
         null,
@@ -222,6 +214,6 @@
         0
       ]
     },
-    "timestamp": 1567964427
+    "timestamp": 1567964537
   }
 }
