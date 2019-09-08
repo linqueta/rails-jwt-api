@@ -66,7 +66,7 @@ describe Api::V1::AuthenticationController, type: :controller do
 
     context 'with expired token' do
       let(:authorization_header) do
-        JWT.encode({ exp: 1.hour.ago.to_i }, ::Auth::JsonWebToken::JWT_KEY)
+        JWT.encode({ exp: 1.hour.ago.to_i }, ::Auth::JWT::JWT_KEY)
       end
 
       it 'should return unauthorized' do
@@ -76,8 +76,8 @@ describe Api::V1::AuthenticationController, type: :controller do
 
     context 'with token in blacklist' do
       let(:authorization_header) do
-        ::Auth::JsonWebToken.encode({}).tap do |token|
-          ::Auth::JsonWebToken.blacklist!(token)
+        ::Auth::JWT.encode({}).tap do |token|
+          ::Auth::JWT.blacklist!(token)
         end
       end
 
@@ -88,14 +88,14 @@ describe Api::V1::AuthenticationController, type: :controller do
 
     context 'with valid token' do
       let(:user) { create :user }
-      let(:authorization_header) { ::Auth::JsonWebToken.encode(user_id: user.id) }
+      let(:authorization_header) { ::Auth::JWT.encode(user_id: user.id) }
 
       it 'should return success' do
         expect(response.status).to eq(200)
       end
 
       it 'should set in blacklist' do
-        expect(::Auth::JsonWebToken.blacklist?(authorization_header)).to be_truthy
+        expect(::Auth::JWT.blacklist?(authorization_header)).to be_truthy
       end
     end
   end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Auth::JsonWebToken, type: :module do
+describe Auth::JWT, type: :module do
   describe '#encode' do
     subject { described_class.encode(payload) }
 

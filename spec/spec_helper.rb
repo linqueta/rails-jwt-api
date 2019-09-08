@@ -19,7 +19,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
   config.after(:each) do
-    Rails.cache.clear(::Auth::JsonWebToken::BLACKLIST_HEADER)
+    Rails.cache.clear(::Auth::JWT::BLACKLIST_HEADER)
     DatabaseCleaner.clean
   end
 

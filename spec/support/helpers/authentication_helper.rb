@@ -7,7 +7,7 @@ module Helpers
                     name: 'Authentication User',
                     email: "#{SecureRandom.uuid}test@test.com",
                     password: SecureRandom.uuid)
-      request.headers['Authorization'] = ::Auth::JsonWebToken.encode(user_id: user.id)
+      request.headers['Authorization'] = ::Auth::JWT.encode(user_id: user.id)
     end
   end
 end
