@@ -4,9 +4,9 @@ module ApiExceptionHandleable
   extend ActiveSupport::Concern
 
   included do
-    rescue_from JWT::Authorizable::NotAuthorizedError, with: :unauthorized
-    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from StandardError, with: :internal_server_error
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
+    rescue_from JWT::Authorizable::NotAuthorizedError, with: :unauthorized
   end
 
   private
@@ -16,7 +16,7 @@ module ApiExceptionHandleable
   end
 
   def record_invalid(error)
-    render json: error, serialzer: Api::RecordInvalidSerializer, status: :unprocessable_entity
+    render json: { errors: error.record.errors.full_messages }, status: :unprocessable_entity
   end
 
   def internal_server_error

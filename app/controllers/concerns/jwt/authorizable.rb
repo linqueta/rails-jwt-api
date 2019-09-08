@@ -6,9 +6,11 @@ module JWT
 
     extend ActiveSupport::Concern
 
-    def authorize
-      raise NotAuthorizedError unless authorization_header && !::Auth::JWT.blacklist?(authorization_header)
+    included do
+      before_action :blacklist, only: %i[authorize blacklist!]
+    end
 
+    def authorize
       build_decode!
       build_user!
     rescue JWT::DecodeError,
@@ -19,19 +21,21 @@ module JWT
     end
 
     def blacklist!
-      raise NotAuthorizedError unless authorization_header
-
       ::Auth::JWT.blacklist!(authorization_header)
     end
 
     private
+
+    def blacklist
+      raise NotAuthorizedError unless authorization_header && !::Auth::JWT.blacklist?(authorization_header)
+    end
 
     def build_decode!
       @decoded = ::Auth::JWT.decode(authorization_header)
     end
 
     def build_user!
-      @user = User.find(@decoded[:user_id])
+      @user = User.find(@decoded[:sub])
     end
 
     def authorization_header
