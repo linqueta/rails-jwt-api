@@ -5,6 +5,7 @@ module Api
     class ApiController < ::ApplicationController
       include ApiExceptionHandleable
       include JWT::Authorizable
+      include JWT::Authenticable
     end
   end
 end
