@@ -24,5 +24,6 @@ RSpec.configure do |config|
   config.include AuthenticationHelper
   config.include JsonHelper
 
+  CacheConfig.configure(config)
   DatabaseCleanerConfig.configure(config)
 end
