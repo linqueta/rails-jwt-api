@@ -62,4 +62,20 @@ describe Auth::JWT, type: :module do
       it { expect(described_class.blacklist?(token)).to be_truthy }
     end
   end
+
+  describe '.blacklist?' do
+    let(:payload) { { sub: 2 } }
+    let(:token) { described_class.encode(payload) }
+    subject { described_class.blacklist?(token) }
+
+    context 'without blacklist token' do
+      it { is_expected.to be_falsey }
+    end
+
+    context 'with blacklist token' do
+      before { described_class.blacklist!(token) }
+
+      it { is_expected.to be_truthy }
+    end
+  end
 end
