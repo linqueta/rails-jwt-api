@@ -17,6 +17,7 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+JsonMatchersConfig.configure
 ShouldaMatchersConfig.configure
 
 RSpec.configure do |config|
