@@ -42,7 +42,24 @@ describe Auth::JWT, type: :module do
 
     it do
       Timecop.freeze(Time.parse('08-09-2019')) do
+        is_expected.to eq(params)
       end
+    end
+  end
+
+  describe '.blacklist!' do
+    let(:payload) { { sub: 1 } }
+    let(:token) { described_class.encode(payload) }
+    subject { described_class.blacklist!(token) }
+
+    context 'before' do
+      it { expect(described_class.blacklist?(token)).to be_falsey }
+    end
+
+    context 'after' do
+      before { subject }
+
+      it { expect(described_class.blacklist?(token)).to be_truthy }
     end
   end
 end
