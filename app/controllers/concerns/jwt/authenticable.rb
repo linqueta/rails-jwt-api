@@ -6,6 +6,10 @@ module JWT
 
     extend ActiveSupport::Concern
 
+    included do
+      attr_accessor :token, :subscriber
+    end
+
     def authenticate
       build_subscriber!
       raise NotAuthenticatedError unless authenticated?
@@ -15,7 +19,7 @@ module JWT
 
     private
 
-    def login_params
+    def authentication_params
       params.require(:authentication).permit(:email, :password)
     end
 
@@ -24,11 +28,11 @@ module JWT
     end
 
     def build_subscriber!
-      @subscriber = User.find_by!(login_params.slice(:email))
+      @subscriber = User.find_by!(authentication_params.slice(:email))
     end
 
     def authenticated?
-      @subscriber.authenticate(login_params[:password])
+      @subscriber.authenticate(authentication_params[:password])
     end
   end
 end
