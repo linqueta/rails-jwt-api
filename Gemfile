@@ -31,6 +31,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'simplecov-summary'
   gem 'simplecov-console'
+  gem 'timecop'
 end
 
 group :development do
