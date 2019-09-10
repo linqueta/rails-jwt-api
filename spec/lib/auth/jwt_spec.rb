@@ -48,7 +48,7 @@ describe Auth::JWT, type: :module do
   end
 
   describe '.blacklist!' do
-    let(:payload) { { sub: 1 } }
+    let(:payload) { { sub: SecureRandom.uuid } }
     let(:token) { described_class.encode(payload) }
     subject { described_class.blacklist!(token) }
 
@@ -64,7 +64,7 @@ describe Auth::JWT, type: :module do
   end
 
   describe '.blacklist?' do
-    let(:payload) { { sub: 2 } }
+    let(:payload) { { sub: SecureRandom.uuid } }
     let(:token) { described_class.encode(payload) }
     subject { described_class.blacklist?(token) }
 
