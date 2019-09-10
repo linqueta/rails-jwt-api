@@ -42,4 +42,17 @@ shared_examples_for 'jwt_authorizable' do
       end
     end
   end
+
+  describe '#blacklist!' do
+    let(:instance) { described_class.new }
+    let(:request) { double(:request, headers: double(:headers, :[] => header)) }
+    let(:sub) { SecureRandom.uuid }
+    let(:header) { ::Auth::JWT.encode(sub: sub) }
+    subject { instance.blacklist! }
+
+    before { allow(instance).to receive(:request).and_return(request) }
+    after { subject }
+
+    it { expect(::Auth::JWT).to receive(:blacklist!).with(header).once }
+  end
 end

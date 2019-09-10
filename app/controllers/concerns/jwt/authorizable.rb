@@ -8,10 +8,10 @@ module JWT
 
     included do
       attr_accessor :user, :decoded
-      before_action :blacklist, only: %i[authorize blacklist!]
     end
 
     def authorize
+      verify_header!
       build_decode!
       build_user!
     rescue JWT::DecodeError,
@@ -22,12 +22,13 @@ module JWT
     end
 
     def blacklist!
+      verify_header!
       ::Auth::JWT.blacklist!(authorization_header)
     end
 
     private
 
-    def blacklist
+    def verify_header!
       raise NotAuthorizedError if authorization_header.blank? || ::Auth::JWT.blacklist?(authorization_header)
     end
 
